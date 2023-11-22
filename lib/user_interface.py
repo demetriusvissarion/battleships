@@ -6,11 +6,13 @@ class UserInterface:
     def run(self):
         self._show("Welcome to the game!")
         self._show("Set up your ships first.")
-        self._show("You have these ships remaining: {}".format(
-            self._ships_unplaced_message()))
-        self._prompt_for_ship_placement()
-        self._show("This is your board now:")
-        self._show(self._format_board())
+
+        while len(self.game.ships_unplaced) > 0:
+            self._show("You have these ships remaining: {}".format(
+                self._ships_unplaced_message()))
+            self._prompt_for_ship_placement()
+            self._show("This is your board now:")
+            self._show(self._format_board())
 
     def _show(self, message):
         self.io.write(message + "\n")
@@ -20,7 +22,7 @@ class UserInterface:
         return self.io.readline().strip()
 
     def _ships_unplaced_message(self):
-        ship_lengths = [str(ship.length) for ship in self.game.unplaced_ships()]
+        ship_lengths = [str(ship.length) for ship in self.game.ships_unplaced]
         return ", ".join(ship_lengths)
 
     def _prompt_for_ship_placement(self):
@@ -49,6 +51,11 @@ class UserInterface:
             row=int(ship_row),
             col=int(ship_col),
         )
+        print('ships_placed: ', self.game.ships_placed)
+        print('ships_unplaced: ', self.game.ships_unplaced)
+
+        # remove placed ship from unplaced list
+        # self.game.self.ships_placed.append()
 
     def _format_board(self):
         rows = []

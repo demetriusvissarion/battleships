@@ -39,17 +39,19 @@ As a player
 So that I can create a layout of ships to outwit my opponent
 I would like to be able to choose the directions my ships face in
 
-_________________________________________________________________________________
 
 5. As a player
 So that I can have a coherent game
 I would like ships to be constrained to be on the board
 
+_________________________________________________________________________________
 
 
 6. As a player
 So that I can have a coherent game
 I would like ships to be constrained not to overlap
+
+
 
 7. As a player
 So that I can win the game
