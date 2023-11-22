@@ -30,19 +30,18 @@ class UserInterface:
         ship_orientation = self._prompt("Vertical or horizontal? [vh]")
 
         if ship_orientation == 'v':
-            row_width = 10 - int(ship_length)
+            row_width -= int(ship_length)
         if ship_orientation == 'h':
-            col_width = 10 - int(ship_length)
+            col_width -= int(ship_length)
 
-        ship_row = 0
-        while int(ship_row) not in range(1, row_width):
-            ship_row = self._prompt(f"Which row? It must be between 1 and {row_width}")
+        ship_row = self._prompt(f"Which row?")
+        while int(ship_row) not in range(1, row_width + 2):
+            ship_row = int(ship_row) - int(ship_length) + 1
 
-        ship_col = 0
-        while int(ship_col) not in range(1, col_width):
-            ship_col = self._prompt(f"Which column? It must be between 1 and {col_width}")
+        ship_col = self._prompt(f"Which column?")
+        while int(ship_col) not in range(1, col_width + 2):
+            ship_col = int(ship_col) - int(ship_length) + 1
 
-        # ship_col = self._prompt("Which column?")
         self._show("OK.")
         self.game.place_ship(
             length=int(ship_length),

@@ -54,3 +54,39 @@ def test_has_a_friendly_string_representation():
         length=5, orientation="horizontal", row=3, col=2)
     assert str(
         ship_placement) == "ShipPlacement(length=5, orientation=horizontal, row=3, col=2)"
+    
+
+"""
+Checks if vertical ships are constrained to be on the board
+"""
+def test_checks_if_vertical_ships_are_on_the_board():
+    ship_placement = ShipPlacement(
+        length=5, orientation="vertical", row=10-4, col=10)
+    assert ship_placement.covers(6, 10)
+    assert ship_placement.covers(7, 10)
+    assert ship_placement.covers(8, 10)
+    assert ship_placement.covers(9, 10)
+    assert ship_placement.covers(10, 10)
+    assert not ship_placement.covers(1, 10)
+    assert not ship_placement.covers(2, 10)
+    assert not ship_placement.covers(3, 10)
+    assert not ship_placement.covers(4, 10)
+    assert not ship_placement.covers(5, 10)
+
+
+"""
+Checks if horizontal ships are constrained to be on the board
+"""
+def test_checks_if_horizontal_ships_are_on_the_board():
+    ship_placement = ShipPlacement(
+        length=5, orientation="horizontal", row=10, col=10-4)
+    assert ship_placement.covers(10, 6)
+    assert ship_placement.covers(10, 7)
+    assert ship_placement.covers(10, 8)
+    assert ship_placement.covers(10, 9)
+    assert ship_placement.covers(10, 10)
+    assert not ship_placement.covers(10, 1)
+    assert not ship_placement.covers(10, 2)
+    assert not ship_placement.covers(10, 3)
+    assert not ship_placement.covers(10, 4)
+    assert not ship_placement.covers(10, 5)

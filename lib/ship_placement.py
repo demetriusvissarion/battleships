@@ -17,3 +17,6 @@ class ShipPlacement:
 
     def __repr__(self):
         return f"ShipPlacement(length={self.length}, orientation={self.orientation}, row={self.row}, col={self.col})"
+    
+
+
