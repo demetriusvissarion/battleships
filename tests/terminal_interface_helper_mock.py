@@ -10,7 +10,7 @@ class TerminalInterfaceHelperMock(object):
         self._provided_inputs.append(input)
 
     def write(self, message):
-        print(self._expected_calls)
+        # print(self._expected_calls)
         expected_call = self._expected_calls.pop(0)
         if expected_call != message:
             raise AssertionError(

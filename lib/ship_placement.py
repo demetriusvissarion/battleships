@@ -18,7 +18,7 @@ class ShipPlacement:
                 return self.col <= col < self.col + self.length
         
         if position == 'v':
-            print('here - v')
+            # print('here - v')
             counter = int(length)
             while counter > 0:
                 counter_value = counter
@@ -31,7 +31,7 @@ class ShipPlacement:
                         return True
         
         if position == 'h':
-            print('here - h')
+            # print('here - h')
             counter = int(length)
             while counter > 0:
                 counter_value = counter

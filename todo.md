@@ -48,10 +48,10 @@ I would like ships to be constrained to be on the board
 6. As a player
 So that I can have a coherent game
 I would like ships to be constrained not to overlap
-   => completed but has a bug: sometimes allow user to overlap ships if intersection > 1st point
+   => completed but has a bug: overlap ships if intersection > 1st point
         => add 3rd argument 'position' (defaults=None) to game.ship_at & ship_placement.covers
         => add 4th argument 'length' (defaults=None) to game.ship_at & ship_placement.covers
-
+      => fixed bugg
 _________________________________________________________________________________
 
 7. As a player

@@ -59,10 +59,10 @@ class UserInterface:
         self._prompt_for_selection_row_column(ship_length)
         self.ship_length = ship_length
         ######
-        print('_prompt_for_ship_placement - ship_length: ', ship_length)
+        # print('_prompt_for_ship_placement - ship_length: ', ship_length)
         ######
         while self.game.ship_at(int(self.ship_row), int(self.ship_col), self.ship_orientation, self.ship_length):
-            print('That postion is taken by another ship, chose again')
+            self._show('That postion is taken by another ship, chose again')
             self._prompt_for_selection_row_column(ship_length)
 
         self._show("OK.")
