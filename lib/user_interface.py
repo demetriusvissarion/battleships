@@ -55,9 +55,13 @@ class UserInterface:
         self.ship_col = ship_col
 
     def _prompt_for_ship_placement(self):
-        ship_length = self._prompt("Which do you wish to place?")
+        ship_length = self._prompt("Which ship do you wish to place?")
         self._prompt_for_selection_row_column(ship_length)
-        while self.game.ship_at(int(self.ship_row), int(self.ship_col)):
+        self.ship_length = ship_length
+        ######
+        print('_prompt_for_ship_placement - ship_length: ', ship_length)
+        ######
+        while self.game.ship_at(int(self.ship_row), int(self.ship_col), self.ship_orientation, self.ship_length):
             print('That postion is taken by another ship, chose again')
             self._prompt_for_selection_row_column(ship_length)
 
@@ -81,5 +85,5 @@ class UserInterface:
             rows.append("".join(row_cells))
         # self.board = rows
         # print('self.board: ', self.board)
-        print('game.ships_placed: ', self.game.ships_placed)
+        # print('game.ships_placed: ', self.game.ships_placed)
         return "\n".join(rows)

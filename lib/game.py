@@ -36,8 +36,11 @@ class Game:
                 break
 
 
-    def ship_at(self, row, col):
+    def ship_at(self, row, col, position = None, length = None):
+        # counter = 0 #
         for ship_placement in self.ships_placed:
-            if ship_placement.covers(row, col):
+            # print(f'{counter}. ship_at - ship_placement: ', ship_placement) #
+            # counter += 1 #
+            if ship_placement.covers(row, col, position, length):
                 return True
         return False

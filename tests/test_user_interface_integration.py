@@ -12,7 +12,7 @@ class TestUserInterface(unittest.TestCase):
         io.expect_print("Welcome to the game!")
         io.expect_print("Set up your ships first.")
         io.expect_print("You have these ships remaining: 2, 3, 3, 4, 5")
-        io.expect_print("Which do you wish to place?")
+        io.expect_print("Which ship do you wish to place?")
         io.provide("2")
         io.expect_print("Vertical or horizontal? [vh]")
         io.provide("v")
@@ -49,7 +49,7 @@ class TestUserInterface(unittest.TestCase):
 
         # place ship 1
         io.expect_print("You have these ships remaining: 2, 3, 3, 4, 5")
-        io.expect_print("Which do you wish to place?")
+        io.expect_print("Which ship do you wish to place?")
         io.provide("2")
         io.expect_print("Vertical or horizontal? [vh]")
         io.provide("v")
@@ -74,7 +74,7 @@ class TestUserInterface(unittest.TestCase):
 
         # place ship 2
         io.expect_print("You have these ships remaining: 3, 3, 4, 5")
-        io.expect_print("Which do you wish to place?")
+        io.expect_print("Which ship do you wish to place?")
         io.provide("3")
         io.expect_print("Vertical or horizontal? [vh]")
         io.provide("v")
