@@ -44,3 +44,6 @@ class Game:
             if ship_placement.covers(row, col, position, length):
                 return True
         return False
+    
+    def fire_at_opponent(self):
+        pass

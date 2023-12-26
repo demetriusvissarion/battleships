@@ -8,8 +8,10 @@ How to get started:
 
 ; pipenv install # To install dependencies
 
+; pipenv shell
 ; pipenv run pytest # All tests should pass
 ; pipenv run pytest --cov lib # To see test coverage too
+
 
 ; pipenv run python run.py
 This will give you a few prompts and show you a board.
@@ -73,3 +75,8 @@ I would like to be able to see my hits and misses so far
 11. As a player
 So that I can play against a human opponent
 I would like to play a two-player game
+
+
+26/12/2023 To add/fix:
+ - fix wrong message "That postion is taken by another ship..."
+    => 3 // v // 1 // 10 after 3 // v // 1 // 1, or reverse

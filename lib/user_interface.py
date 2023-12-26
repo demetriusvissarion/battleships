@@ -2,7 +2,7 @@ class UserInterface:
     def __init__(self, io, game):
         self.io = io
         self.game = game
-        self.board = []
+        # self.board = []
 
     def run(self, runs = 5):
         self._show("Welcome to the game!")
