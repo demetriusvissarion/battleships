@@ -1,7 +1,7 @@
 class UserInterface:
     def __init__(self, io, game):
-        self.io = io
-        self.game = game
+        self.io = io # game terminal interface
+        self.game = game # game instance
         # self.board = []
 
     def run(self, runs = 5):

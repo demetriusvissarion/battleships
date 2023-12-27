@@ -25,4 +25,3 @@ user_interface.run()
 ############## "Play" class uses both players game instances to fire shots and decide the winner
 # play = Play()
 # while not play.decide_winner(player1, player2):
-    

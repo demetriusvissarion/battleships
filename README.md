@@ -1,8 +1,5 @@
 # Battleships Project
 
-This is a project aimed to develop all of your skills so far. **It is designed
-to be challenging for most learners on the Makers immersive course.**
-
 Your assignment is to design and test-drive a terminal-based Battleships game. A
 small amount of code is already written, to get you started and show you the
 approach to building and testing terminal user-interfaces using mocking.
@@ -13,7 +10,7 @@ How to get started:
 
 ```shell
 ; pipenv install # To install dependencies
-
+; pipenv shell
 ; pipenv run pytest # All tests should pass
 ; pipenv run pytest --cov lib # To see test coverage too
 
@@ -81,14 +78,3 @@ As a player
 So that I can play against a human opponent
 I would like to play a two-player game
 ```
-
-
-<!-- BEGIN GENERATED SECTION DO NOT EDIT -->
-
----
-
-**How was this resource?**  
-[😫](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fgolden-square-in-python&prefill_File=codebases%2Fbattleships%2FREADME.md&prefill_Sentiment=😫) [😕](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fgolden-square-in-python&prefill_File=codebases%2Fbattleships%2FREADME.md&prefill_Sentiment=😕) [😐](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fgolden-square-in-python&prefill_File=codebases%2Fbattleships%2FREADME.md&prefill_Sentiment=😐) [🙂](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fgolden-square-in-python&prefill_File=codebases%2Fbattleships%2FREADME.md&prefill_Sentiment=🙂) [😀](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fgolden-square-in-python&prefill_File=codebases%2Fbattleships%2FREADME.md&prefill_Sentiment=😀)  
-Click an emoji to tell us.
-
-<!-- END GENERATED SECTION DO NOT EDIT -->
