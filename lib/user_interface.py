@@ -29,6 +29,13 @@ class UserInterface:
         ship_lengths = [str(ship.length) for ship in self.game.ships_unplaced]
         return ", ".join(ship_lengths)
     
+    def is_new_ship_placement_inside_board(self, position, length, row, col):
+        pass
+
+    def find_new_ship_placement_points(self, position, length, row, col):
+        pass
+    
+    # to change so it doesn't correct user selection, but force user to chose valid ship placement
     def _prompt_for_selection_vert_or_hor(self, ship_length):
         row_width = 10
         col_width = 10
@@ -41,6 +48,7 @@ class UserInterface:
         self.row_width = row_width
         self.col_width = col_width
     
+    # to change so it doesn't correct user selection, but force user to chose valid ship placement
     def _prompt_for_selection_row_column(self, ship_length):
         self._prompt_for_selection_vert_or_hor(ship_length)
 

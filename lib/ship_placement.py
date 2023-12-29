@@ -6,10 +6,13 @@ class ShipPlacement:
         self.col = col
         # print('ShipPlacement __init__ row/col: ', self.row, self.col)
 
-    def covers(self, row, col, position = None, length = None):
+    def covers(self, row, col):
         if self.orientation == "vertical":
+            # if col is different
             if self.col != col:
                 return False
+            # if col is the same check rows
+            # if old row <= new row < old row + old length
             return self.row <= row < self.row + self.length
         else:
             if self.row != row:
