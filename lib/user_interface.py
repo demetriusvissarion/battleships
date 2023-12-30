@@ -19,6 +19,7 @@ class UserInterface:
                 self._show("This is your board now:")
                 self._show(self._format_board())
                 runs -= 1
+                self.valid_new_ship_placement = False
             break
 
     def _show(self, message):
@@ -33,24 +34,23 @@ class UserInterface:
         return ", ".join(ship_lengths)
     
     def is_new_ship_placement_inside_board(self):
-        if 0 < int(self.ship_row) < 10:
-            if 0 < int(self.ship_col) < 10:
+        if 0 < int(self.ship_row) < 11:
+            if 0 < int(self.ship_col) < 11:
                 if self.ship_orientation == 'v':
-                    if 0 < int(self.ship_col) + int(self.ship_length) < 10:
+                    if 0 < int(self.ship_row) + int(self.ship_length) < 11:
                         return True
+                    else:
+                        print('Row outside board, chose again: ', int(self.ship_col) + int(self.ship_length))
+                        return False
                 if self.ship_orientation == 'h':
-                    if 0 < int(self.ship_row) + int(self.ship_length) < 10:
+                    if 0 < int(self.ship_col) + int(self.ship_length) < 11:
                         return True
+                    else:
+                        print('Column outside board, chose again: ', int(self.ship_row) + int(self.ship_length))
+                        return False
         else:
             self._show('Position outside the board, chose again')
             return False
-
-    def find_new_ship_placement_points(self):
-        self.ship_points = {}
-        counter = int(self.ship_length)
-        if self.ship_orientation == 'v':
-            for _ in range(0, counter):
-                self.ship_points[self.row + counter] = self.col
     
     def _prompt_for_selection_row_column(self):
         while not self.valid_new_ship_placement:
@@ -60,14 +60,33 @@ class UserInterface:
                 self.valid_new_ship_placement = True
                 break
 
+    def find_new_ship_placement_points(self):
+        self.ship_points = []
+        counter = int(self.ship_length)
+        if self.ship_orientation == 'v':
+            for _ in range(0, int(self.ship_length)):
+                self.ship_points.append([int(self.ship_row) + counter - 1, int(self.ship_col)])
+                counter -= 1
+        if self.ship_orientation == 'h':
+            for _ in range(0, int(self.ship_length)):
+                self.ship_points.append([int(self.ship_row), int(self.ship_col) + counter - 1])
+                counter -= 1
+
     def _prompt_for_ship_placement(self):
         self.ship_length = self._prompt("Which ship do you wish to place?")
         self.ship_orientation = self._prompt("Vertical or horizontal? [vh]")
         self._prompt_for_selection_row_column()
         self.find_new_ship_placement_points()
-        while True in [self.game.ship_at(row, col) for row,col in self.ship_points.items()]:
+        checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
+        print('self.ship_points: ', self.ship_points)
+        print('checking_all_point: ', checking_all_point)
+        while True in checking_all_point:
             self._show('That position is taken by another ship, chose again')
+            self.valid_new_ship_placement = False
+            self.ship_orientation = self._prompt("Vertical or horizontal? [vh]")
             self._prompt_for_selection_row_column()
+            self.find_new_ship_placement_points()
+            checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
 
         self._show("OK.")
         self.game.place_ship(
