@@ -2,6 +2,9 @@ class UserInterface:
     def __init__(self, io, game):
         self.io = io # game terminal interface
         self.game = game # game instance
+        self.row_width = 10
+        self.col_width = 10
+        self.valid_new_ship_placement = False
         # self.board = []
 
     def run(self, runs = 5):
@@ -29,53 +32,46 @@ class UserInterface:
         ship_lengths = [str(ship.length) for ship in self.game.ships_unplaced]
         return ", ".join(ship_lengths)
     
-    def is_new_ship_placement_inside_board(self, position, length, row, col):
-        pass
+    def is_new_ship_placement_inside_board(self):
+        if 0 < int(self.ship_row) < 10:
+            if 0 < int(self.ship_col) < 10:
+                if self.ship_orientation == 'v':
+                    if 0 < int(self.ship_col) + int(self.ship_length) < 10:
+                        return True
+                if self.ship_orientation == 'h':
+                    if 0 < int(self.ship_row) + int(self.ship_length) < 10:
+                        return True
+        else:
+            self._show('Position outside the board, chose again')
+            return False
 
-    def find_new_ship_placement_points(self, position, length, row, col):
-        pass
+    def find_new_ship_placement_points(self):
+        self.ship_points = {}
+        counter = int(self.ship_length)
+        if self.ship_orientation == 'v':
+            for _ in range(0, counter):
+                self.ship_points[self.row + counter] = self.col
     
-    # to change so it doesn't correct user selection, but force user to chose valid ship placement
-    def _prompt_for_selection_vert_or_hor(self, ship_length):
-        row_width = 10
-        col_width = 10
-        ship_orientation = self._prompt("Vertical or horizontal? [vh]")
-        if ship_orientation == 'v':
-            row_width -= int(ship_length)
-        if ship_orientation == 'h':
-            col_width -= int(ship_length)
-        self.ship_orientation = ship_orientation
-        self.row_width = row_width
-        self.col_width = col_width
-    
-    # to change so it doesn't correct user selection, but force user to chose valid ship placement
-    def _prompt_for_selection_row_column(self, ship_length):
-        self._prompt_for_selection_vert_or_hor(ship_length)
-
-        ship_row = self._prompt("Which row?")
-        while int(ship_row) not in range(1, self.row_width + 2):
-            ship_row = int(ship_row) - int(ship_length) + 1
-        self.ship_row = ship_row
-
-        ship_col = self._prompt("Which column?")
-        while int(ship_col) not in range(1, self.col_width + 2):
-            ship_col = int(ship_col) - int(ship_length) + 1
-        self.ship_col = ship_col
+    def _prompt_for_selection_row_column(self):
+        while not self.valid_new_ship_placement:
+            self.ship_row = self._prompt("Which row?")
+            self.ship_col = self._prompt("Which column?")
+            if self.is_new_ship_placement_inside_board():
+                self.valid_new_ship_placement = True
+                break
 
     def _prompt_for_ship_placement(self):
-        ship_length = self._prompt("Which ship do you wish to place?")
-        self._prompt_for_selection_row_column(ship_length)
-        self.ship_length = ship_length
-        ######
-        # print('_prompt_for_ship_placement - ship_length: ', ship_length)
-        ######
-        while self.game.ship_at(int(self.ship_row), int(self.ship_col), self.ship_orientation, self.ship_length):
-            self._show('That postion is taken by another ship, chose again')
-            self._prompt_for_selection_row_column(ship_length)
+        self.ship_length = self._prompt("Which ship do you wish to place?")
+        self.ship_orientation = self._prompt("Vertical or horizontal? [vh]")
+        self._prompt_for_selection_row_column()
+        self.find_new_ship_placement_points()
+        while True in [self.game.ship_at(row, col) for row,col in self.ship_points.items()]:
+            self._show('That position is taken by another ship, chose again')
+            self._prompt_for_selection_row_column()
 
         self._show("OK.")
         self.game.place_ship(
-            length=int(ship_length),
+            length=int(self.ship_length),
             orientation={"v": "vertical", "h": "horizontal"}[self.ship_orientation],
             row=int(self.ship_row),
             col=int(self.ship_col),

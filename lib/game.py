@@ -26,9 +26,9 @@ class Game:
             col=col,
         )
         self.ships_placed.append(ship_placement)
-        self.remove_ship(ship_placement.length)
+        self.remove_unplaced_ship(ship_placement.length)
 
-    def remove_ship(self, length):
+    def remove_unplaced_ship(self, length):
         # find first occurrence of ship with the specified length and remove it
         for ship in self.ships_unplaced:
             if ship.length == length:
