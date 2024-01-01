@@ -19,8 +19,8 @@ user_interface.run()
 
 ############## Bot player instance of the game
 bot_game = Game()
-bot_player = BotInterface(bot_game)
-user_interface.run()
+bot_interface = BotInterface(bot_game)
+bot_interface.run()
 
 ############## "Play" class uses both players game instances to fire shots and decide the winner
 # play = Play()

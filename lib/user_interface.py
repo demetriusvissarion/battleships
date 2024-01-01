@@ -22,6 +22,23 @@ class UserInterface:
                 self.valid_new_ship_placement = False
             break
 
+        # add firing at opponent here
+            # get 'hit' or 'miss' message after firing
+            # show opponent board with only the point I chose
+                # show hits with 'X' and misses with 'O'
+                # if 'hit':
+                    # I get another consecutive free shot until a 'miss'
+                # if 'miss':
+                    # pass the turn to the opponent
+        
+
+        # add opponent firing at me here
+            # see my board with 'hit' or 'miss' message after firing
+                # if 'hit':
+                    # opponent gets another consecutive free shot until a 'miss'
+                # if 'miss':
+                    # turn gets passed to me
+
     def _show(self, message):
         self.io.write(message + "\n")
 
@@ -40,13 +57,13 @@ class UserInterface:
                     if 0 < int(self.ship_row) + int(self.ship_length) < 11:
                         return True
                     else:
-                        print('Row outside board, chose again: ', int(self.ship_col) + int(self.ship_length))
+                        print('Row outside board, chose again: ')
                         return False
                 if self.ship_orientation == 'h':
                     if 0 < int(self.ship_col) + int(self.ship_length) < 11:
                         return True
                     else:
-                        print('Column outside board, chose again: ', int(self.ship_row) + int(self.ship_length))
+                        print('Column outside board, chose again: ')
                         return False
         else:
             self._show('Position outside the board, chose again')
