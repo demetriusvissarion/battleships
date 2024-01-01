@@ -50,10 +50,8 @@ def test_checks_if_horizontal_ships_cover_a_given_row_and_col():
 Has a friendly string representation
 """
 def test_has_a_friendly_string_representation():
-    ship_placement = ShipPlacement(
-        length=5, orientation="horizontal", row=3, col=2)
-    assert str(
-        ship_placement) == "ShipPlacement(length=5, orientation=horizontal, row=3, col=2)"
+    ship_placement = ShipPlacement(length=5, orientation="horizontal", row=3, col=2)
+    assert str(ship_placement) == "ShipPlacement(length=5, orientation=horizontal, row=3, col=2)"
     
 
 """

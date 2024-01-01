@@ -18,3 +18,6 @@ class ShipPlacement:
             if self.row != row:
                 return False
             return self.col <= col < self.col + self.length
+    
+    def __repr__(self):
+        return f"ShipPlacement(length={self.length}, orientation={self.orientation}, row={self.row}, col={self.col})"
