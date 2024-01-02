@@ -5,7 +5,6 @@ class UserInterface:
         self.row_width = 10
         self.col_width = 10
         self.valid_new_ship_placement = False
-        # self.board = []
 
     def run(self, runs = 5):
         self._show("Welcome to the game!")
@@ -21,23 +20,6 @@ class UserInterface:
                 runs -= 1
                 self.valid_new_ship_placement = False
             break
-
-        # add firing at opponent here
-            # get 'hit' or 'miss' message after firing
-            # show opponent board with only the point I chose
-                # show hits with 'X' and misses with 'O'
-                # if 'hit':
-                    # I get another consecutive free shot until a 'miss'
-                # if 'miss':
-                    # pass the turn to the opponent
-        
-
-        # add opponent firing at me here
-            # see my board with 'hit' or 'miss' message after firing
-                # if 'hit':
-                    # opponent gets another consecutive free shot until a 'miss'
-                # if 'miss':
-                    # turn gets passed to me
 
     def _show(self, message):
         self.io.write(message + "\n")
@@ -95,8 +77,8 @@ class UserInterface:
         self._prompt_for_selection_row_column()
         self.find_new_ship_placement_points()
         checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
-        print('self.ship_points: ', self.ship_points)
-        print('checking_all_point: ', checking_all_point)
+        # print('self.ship_points: ', self.ship_points)
+        # print('checking_all_point: ', checking_all_point)
         while True in checking_all_point:
             self._show('That position is taken by another ship, chose again')
             self.valid_new_ship_placement = False

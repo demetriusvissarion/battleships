@@ -2,50 +2,82 @@ import random
 
 class BotInterface:
     def __init__(self, game):
-        self.game = game
+        self.game = game # game instance
+        self.row_width = 10
+        self.col_width = 10
+        self.valid_new_ship_placement = False
 
-    def run(self):
-        self.place_ships_randomly_for_bot()
+    def run(self, runs = 5):
+        while len(self.game.ships_unplaced) > 0:
+            while runs > 0:
+                print(f"<dev> Bot has these ships remaining: {', '.join(self.ships_unplaced())}")
+                self.random_ship_placement()
+                runs -= 1
+                self.valid_new_ship_placement = False
+            break
 
-    def select_ship_orientation(self, ship_length):
-        row_width = 10
-        col_width = 10
-        ship_orientation = random.choice(['v', 'h'])
-        if ship_orientation == 'v':
-            row_width -= int(ship_length)
-        if ship_orientation == 'h':
-            col_width -= int(ship_length)
-        self.row_width = row_width
-        self.col_width = col_width
-        self.ship_orientation = ship_orientation
+        self.show_board_to_dev()
+
+    def ships_unplaced(self):
+        ship_lengths = [str(ship.length) for ship in self.game.ships_unplaced]
+        return ship_lengths
     
-    def select_row_and_col(self, ship_length):
-        self.select_ship_orientation(ship_length)
-        ship_row = random.randint(1, 10)
-        while int(ship_row) not in range(1, self.row_width + 2):
-            ship_row = int(ship_row) - int(ship_length) + 1
+    def is_new_ship_placement_inside_board(self):
+        if 0 < int(self.ship_row) < 11:
+            if 0 < int(self.ship_col) < 11:
+                if self.ship_orientation == 'v':
+                    if 0 < int(self.ship_row) + int(self.ship_length) < 11:
+                        return True
+                    else:
+                        return False
+                if self.ship_orientation == 'h':
+                    if 0 < int(self.ship_col) + int(self.ship_length) < 11:
+                        return True
+                    else:
+                        return False
+        else:
+            return False
+    
+    def random_col_row_placement(self):
+        while not self.valid_new_ship_placement:
+            self.ship_row = random.randint(1, 11)
+            self.ship_col = random.randint(1, 11)
+            if self.is_new_ship_placement_inside_board():
+                self.valid_new_ship_placement = True
+                break
 
-        ship_col = random.randint(1, 10)
-        while int(ship_col) not in range(1, self.col_width + 2):
-            ship_col = int(ship_col) - int(ship_length) + 1
-        self.ship_row = ship_row
-        self.ship_col = ship_col
+    def find_new_ship_placement_points(self):
+        self.ship_points = []
+        counter = int(self.ship_length)
+        if self.ship_orientation == 'v':
+            for _ in range(0, int(self.ship_length)):
+                self.ship_points.append([int(self.ship_row) + counter - 1, int(self.ship_col)])
+                counter -= 1
+        if self.ship_orientation == 'h':
+            for _ in range(0, int(self.ship_length)):
+                self.ship_points.append([int(self.ship_row), int(self.ship_col) + counter - 1])
+                counter -= 1
 
-    def place_ships_randomly_for_bot(self):
-        ship_lengths = [2, 3, 3, 4, 5]
+    def random_ship_placement(self):
+        self.ship_length = random.sample(self.ships_unplaced(), 1)
+        self.ship_orientation = random.sample(['v', 'h'], 1)
+        self.random_col_row_placement()
+        self.find_new_ship_placement_points()
+        checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
 
-        for ship_length in ship_lengths:
-            self.select_row_and_col(ship_length)
+        while True in checking_all_point:
+            self.valid_new_ship_placement = False
+            self.ship_orientation = random.sample(['v', 'h'], 1)
+            self.random_col_row_placement()
+            self.find_new_ship_placement_points()
+            checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
 
-            while self.game.ship_at(int(self.ship_row), int(self.ship_col), self.ship_orientation, ship_length):
-                self.select_row_and_col(ship_length)
-
-            self.game.place_ship(
-                length=int(ship_length),
-                orientation={"v": "vertical", "h": "horizontal"}[self.ship_orientation],
-                row=int(self.ship_row),
-                col=int(self.ship_col),
-            )
+        self.game.place_ship(
+            length=int(self.ship_length),
+            orientation={"v": "vertical", "h": "horizontal"}[self.ship_orientation],
+            row=int(self.ship_row),
+            col=int(self.ship_col),
+        )
 
     def _format_board(self):
         rows = []
