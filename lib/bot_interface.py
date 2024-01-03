@@ -41,7 +41,9 @@ class BotInterface:
     def random_col_row_placement(self):
         while not self.valid_new_ship_placement:
             self.ship_row = random.randint(1, 11)
+            print('self.ship_row: ', self.ship_row)
             self.ship_col = random.randint(1, 11)
+            print('self.ship_col: ', self.ship_col)
             if self.is_new_ship_placement_inside_board():
                 self.valid_new_ship_placement = True
                 break
@@ -60,7 +62,8 @@ class BotInterface:
 
     def random_ship_placement(self):
         self.ship_length = random.sample(self.ships_unplaced(), 1)
-        self.ship_orientation = random.sample(['v', 'h'], 1)
+        self.ship_orientation = random.choice(['v', 'h'])
+        print('self.ship_orientation: ', self.ship_orientation)
         self.random_col_row_placement()
         self.find_new_ship_placement_points()
         checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
