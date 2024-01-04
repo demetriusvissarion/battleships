@@ -16,7 +16,7 @@ class BotInterface:
                 self.valid_new_ship_placement = False
             break
 
-        self.show_board_to_dev()
+        self._format_board()
 
     def ships_unplaced(self):
         ship_lengths = [str(ship.length) for ship in self.game.ships_unplaced]
@@ -27,11 +27,13 @@ class BotInterface:
             if 0 < int(self.ship_col) < 11:
                 if self.ship_orientation == 'v':
                     if 0 < int(self.ship_row) + int(self.ship_length) < 11:
+                        print('v - int(self.ship_row) + int(self.ship_length): ', int(self.ship_row) + int(self.ship_length))
                         return True
                     else:
                         return False
                 if self.ship_orientation == 'h':
                     if 0 < int(self.ship_col) + int(self.ship_length) < 11:
+                        print('h - int(self.ship_col) + int(self.ship_length): ', int(self.ship_col) + int(self.ship_length))
                         return True
                     else:
                         return False
@@ -41,9 +43,9 @@ class BotInterface:
     def random_col_row_placement(self):
         while not self.valid_new_ship_placement:
             self.ship_row = random.randint(1, 11)
-            print('self.ship_row: ', self.ship_row)
+            # print('self.ship_row: ', self.ship_row)
             self.ship_col = random.randint(1, 11)
-            print('self.ship_col: ', self.ship_col)
+            # print('self.ship_col: ', self.ship_col)
             if self.is_new_ship_placement_inside_board():
                 self.valid_new_ship_placement = True
                 break
@@ -61,7 +63,8 @@ class BotInterface:
                 counter -= 1
 
     def random_ship_placement(self):
-        self.ship_length = random.sample(self.ships_unplaced(), 1)
+        self.ship_length = random.choice(self.ships_unplaced())
+        print('self.ship_length: ', self.ship_length)
         self.ship_orientation = random.choice(['v', 'h'])
         print('self.ship_orientation: ', self.ship_orientation)
         self.random_col_row_placement()
@@ -94,5 +97,5 @@ class BotInterface:
             rows.append("".join(row_cells))
         return "\n".join(rows)
 
-    def show_board_to_dev(self):
-        return self._format_board()
+    # def show_board_to_dev(self):
+    #     return self._format_board()
