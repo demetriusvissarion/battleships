@@ -28,12 +28,16 @@ class BotInterface:
                 if self.ship_orientation == 'v':
                     if 0 < int(self.ship_row) + int(self.ship_length) < 11:
                         print('v - int(self.ship_row) + int(self.ship_length): ', int(self.ship_row) + int(self.ship_length))
+                        print('self.ship_row: ', self.ship_row)
+                        print('self.ship_col: ', self.ship_col)
                         return True
                     else:
                         return False
                 if self.ship_orientation == 'h':
                     if 0 < int(self.ship_col) + int(self.ship_length) < 11:
                         print('h - int(self.ship_col) + int(self.ship_length): ', int(self.ship_col) + int(self.ship_length))
+                        print('self.ship_row: ', self.ship_row)
+                        print('self.ship_col: ', self.ship_col)
                         return True
                     else:
                         return False
@@ -42,11 +46,12 @@ class BotInterface:
     
     def random_col_row_placement(self):
         while not self.valid_new_ship_placement:
-            self.ship_row = random.randint(1, 11)
-            # print('self.ship_row: ', self.ship_row)
-            self.ship_col = random.randint(1, 11)
-            # print('self.ship_col: ', self.ship_col)
+            self.ship_row = random.randint(1, 11 - int(self.ship_length))
+            print('self.ship_row: ', self.ship_row)
+            self.ship_col = random.randint(1, 11 - int(self.ship_length))
+            print('self.ship_col: ', self.ship_col)
             if self.is_new_ship_placement_inside_board():
+                print('if - here')
                 self.valid_new_ship_placement = True
                 break
 
@@ -61,22 +66,22 @@ class BotInterface:
             for _ in range(0, int(self.ship_length)):
                 self.ship_points.append([int(self.ship_row), int(self.ship_col) + counter - 1])
                 counter -= 1
+    
+    def random_ship_placement_helper(self):
+        self.ship_orientation = random.sample(['v', 'h'], 1)
+        self.random_col_row_placement()
+        self.find_new_ship_placement_points()
+        self.checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
 
     def random_ship_placement(self):
         self.ship_length = random.choice(self.ships_unplaced())
+        self.random_ship_placement_helper()
         print('self.ship_length: ', self.ship_length)
-        self.ship_orientation = random.choice(['v', 'h'])
         print('self.ship_orientation: ', self.ship_orientation)
-        self.random_col_row_placement()
-        self.find_new_ship_placement_points()
-        checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
 
-        while True in checking_all_point:
+        while True in self.checking_all_point:
             self.valid_new_ship_placement = False
-            self.ship_orientation = random.sample(['v', 'h'], 1)
-            self.random_col_row_placement()
-            self.find_new_ship_placement_points()
-            checking_all_point = [self.game.ship_at(pair_row_col[0], pair_row_col[1]) for pair_row_col in self.ship_points]
+            self.random_ship_placement_helper()
 
         self.game.place_ship(
             length=int(self.ship_length),
