@@ -1,23 +1,25 @@
-# from lib.bot_interface import *
-# from lib.game import Game
+import unittest
 
-# """
-# Randomly places all ships without overlap
-# """
-# def test_randomly_places_all_ships_without_overlap():
-#     game = Game()
-#     bot_player = BotInterface(game)
-#     bot_player.run()
-#     board = bot_player._format_board()
-#     print(print)
-#     total_length = 0
-#     for ship in game.ships_placed:
-#         total_length += ship.length
+from lib.game import Game
+from lib.bot_interface import *
 
-#     total_covered = 0
-#     for char in board:
-#         if char == 'S':
-#             total_covered += 1
+"""
+Randomly places all ships without overlap
+"""
+class TestRandomPlacement(unittest.TestCase):
+    def test_randomly_places_all_ships_without_overlap(self):
+        bot_game = Game()
+        bot_interface = BotInterface(bot_game)
+        bot_interface.run()
 
-#     assert total_length == total_covered
-#     bot_player.place_ships_randomly_for_bot.assert_called()
+        # Get the printed board from the game
+        printed_board = bot_interface._format_board()
+
+        # Count the occurrences of 'S' in the printed board
+        count_s = printed_board.count('S')
+
+        # Assert that 'S' appears 17 times
+        self.assertEqual(count_s, 17, f"Expected 'S' 17 times, but found {count_s}.")
+
+    if __name__ == '__main__':
+        unittest.main()
