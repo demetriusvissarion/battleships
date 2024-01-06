@@ -8,17 +8,20 @@ class BotInterface:
         self.valid_new_ship_placement = False
         self.ship_row = 0
         self.ship_col = 0
+        self.dev_mode = True # change to False when going in production
 
     def run(self, runs = 5):
         while len(self.game.ships_unplaced) > 0:
             while runs > 0:
-                print(f"<dev> Bot has these ships remaining: {', '.join(self.ships_unplaced())}")
+                if self.dev_mode == True:
+                    print(f"<dev> Bot has these ships remaining: {', '.join(self.ships_unplaced())}")
                 self.random_ship_placement()
                 runs -= 1
                 self.valid_new_ship_placement = False
             break
-
-        print(self._format_board())
+        
+        if self.dev_mode == True:
+            print(self._format_board())
 
     def ships_unplaced(self):
         ship_lengths = [str(ship.length) for ship in self.game.ships_unplaced]
