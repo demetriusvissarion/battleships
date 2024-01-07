@@ -35,6 +35,11 @@ class Game:
                 self.ships_unplaced.remove(ship)
                 break
 
+    def receive_attack(self, row, col):
+        if self.ship_at(row, col):
+            return 'X'
+        else:
+            return 'O'
 
     def ship_at(self, row, col):
         for ship_placement in self.ships_placed:
