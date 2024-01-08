@@ -17,6 +17,8 @@ class Play:
         self.user_interface.run()
         self.bot_interface.run()
         # while not self.winner:
+        print(self.show_shots_to_opponent_board())
+
 
     def fire_at_opponent(self, row, col):
         # add firing at opponent here
@@ -35,13 +37,15 @@ class Play:
         
     def show_shots_to_opponent_board(self):
         rows = []
-        for row in range(1, self.game.rows + 1):
+        for row in range(1, self.bot_game.rows + 1):
             row_cells = []
-            for col in range(1, self.game.cols + 1):
-                if self.game.ship_at(row, col):
-                    row_cells.append("S")
+            for col in range(1, self.bot_game.cols + 1):
+                if (row, col, "X") in self.shots_fired:
+                    row_cells.append("X")  # display 'X' for a hit
+                elif (row, col, "O") in self.shots_fired:
+                    row_cells.append("O")  # display 'O' for a miss
                 else:
-                    row_cells.append(".")
+                    row_cells.append(".")  # display '.' for empty space
             rows.append("".join(row_cells))
         return "\n".join(rows)
         
